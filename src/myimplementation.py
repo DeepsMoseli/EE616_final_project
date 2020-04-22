@@ -15,6 +15,7 @@ from torch.utils import data
 from torchsummary import summary
 from torch import nn
 from torch import optim
+from sklearn.model_selection import train_test_split as tts
 import torch.nn.functional as F
 from torchvision import datasets,models, transforms
 from torch.utils.data import Dataset, Subset, DataLoader, random_split
@@ -22,7 +23,7 @@ from data_gen import Dataset
 
 # Load the dataset and train, val, test splits
 
-num_epochs = 15
+num_epochs = 200
 num_classes = 2
 batch_size = 3
 learning_rate = 0.0005
@@ -30,7 +31,8 @@ learning_rate = 0.0005
 print("Loading datasets...")
 ##################Create dataset generator##################################
 datacsv = pd.read_csv("data.csv")
-partition = {'train':list(datacsv["image"][:100]),'validation':list(datacsv["image"][100:])}
+x_train,x_test =tts(datacsv["image"],test_size=1/6, shuffle=True)
+partition = {'train':list(x_train),'validation':list(x_test)}
 labels = {}
 
 for k in range(len(datacsv['image'])):
@@ -69,11 +71,11 @@ class Network(nn.Module):
     def forward(self,x):
         # TODO: Design your own network, implement forward pass here
         x = self.pool(F.relu(self.conv1(x))) #16*124*124 -> 16*62*62
-        x = self.pool(F.relu(self.conv2(x))) #32*58*58 -> 32*28*28
+        x = self.pool(F.relu(self.conv2(x))) #32*58*58 -> 32*29*29
         x = x.view(-1, 32 * 29 * 29)
         x = F.dropout(F.relu(self.fc1(x)))
         x = F.relu(self.fc2(x))
-        out = self.fc3(x)
+        out = F.sigmoid(self.fc3(x))
         return out
 
 
@@ -106,7 +108,7 @@ def evaluate(model, validation_generator): # Evaluate accuracy on validation / t
     model.eval() # Set the model to evaluation mode
     correct = 0
     total = 0
-    with torch.no_grad(): # Do not calculate grident to speed up computation
+    with torch.set_grad_enabled(True): # Do not calculate grident to speed up computation
         for batch, label in tqdm(validation_generator):
             batch = batch.to(device)
             label = label.to(device)
@@ -121,3 +123,4 @@ train(model, training_generator, num_epochs)
 print("Evaluate on validation set...")
 evaluate(model, validation_generator)
 
+evaluate(model, training_generator)
