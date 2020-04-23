@@ -126,3 +126,4 @@ for cv in range(6):
     cv_results.append(result)
 
 np.mean(cv_results)
+result = evaluate(model, training_generator)
