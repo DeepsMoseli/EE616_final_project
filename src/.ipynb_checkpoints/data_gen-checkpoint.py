@@ -2,9 +2,7 @@
 """
 Created on Tue Apr 21 11:42:18 2020
 
-From: Niranjan Kumar's medium post on visualizing convolution
-Link: https://towardsdatascience.com/visualizing-convolution-neural-networks-using-pytorch-3dfa8443e74e
-
+@Moseli
 """
 
 ########################dataset creation##################

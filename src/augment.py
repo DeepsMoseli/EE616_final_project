@@ -10,8 +10,9 @@ from torchvision import transforms
 import pandas as pd
 
 class Augmentations:
-    def __init__(self,angles =[180]):
+    def __init__(self,angles =[180],size=(748,512)):
         self.angles = angles
+        self.size = size
         
     def rotate_append(self,number,label):
         hold = []

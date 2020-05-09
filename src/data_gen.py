@@ -19,7 +19,7 @@ class Dataset(data.Dataset):
         'Initialization'
         self.labels = labels
         self.list_IDs = list_IDs
-        self.size = (748,500)
+        self.size = (748,512)
         self.teeth_transform = transforms.Compose([
             #transforms.RandomResizedCrop(self.size),
             transforms.Grayscale(num_output_channels=3),
