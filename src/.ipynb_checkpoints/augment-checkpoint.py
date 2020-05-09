@@ -26,4 +26,3 @@ class Augmentations:
         return pd.DataFrame({"image":hold,"label":labels})
 
 
-
