@@ -2,6 +2,7 @@
 """
 Created on Tue Apr 21 11:42:18 2020
 
+Now lets keep 748 by 512
 @author: Deeps
 """
 

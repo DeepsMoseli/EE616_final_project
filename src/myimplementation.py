@@ -23,7 +23,7 @@ from data_gen import Dataset
 
 # Load the dataset and train, val, test splits
 
-num_epochs = 200
+num_epochs = 1
 num_classes = 2
 batch_size = 3
 learning_rate = 0.0005
@@ -31,7 +31,7 @@ datacsv = pd.read_csv("data.csv")
 cv_results = []
 ##################Create dataset generator##################################
 
-for cv in range(6):
+for cv in range(1):
     x_train,x_test =tts(datacsv["image"],test_size=1/6, shuffle=True)
     partition = {'train':list(x_train),'validation':list(x_test)}
     labels = {}
@@ -61,10 +61,10 @@ for cv in range(6):
             # If you have many layers, consider using nn.Sequential() to simplify your code
             # self.fc1 = nn.Linear(28*28, 8) # from 28x28 input image to hidden layer of size 256
             # self.fc2 = nn.Linear(8,10) # from hidden layer to 10 class scores
-            self.conv1 = nn.Conv2d(3, 16, 5) #18*128*128
-            self.pool = nn.MaxPool2d(2, 2) #18*64*64
-            self.conv2 = nn.Conv2d(16, 32, 5) #36*64*64
-            self.fc1 = nn.Linear(32 * 29 * 29, 128)
+            self.conv1 = nn.Conv2d(3, 6, 5) #18*128*128
+            self.pool = nn.MaxPool2d(2, 2) 
+            self.conv2 = nn.Conv2d(6, 12, 5) #36*64*64
+            self.fc1 = nn.Linear(12 * 29 * 29, 128)
             self.fc2 = nn.Linear(128, 64)
             self.fc3 = nn.Linear(64, num_classes)
             
@@ -72,8 +72,8 @@ for cv in range(6):
         def forward(self,x):
             # TODO: Design your own network, implement forward pass here
             x = self.pool(F.relu(self.conv1(x))) #16*124*124 -> 16*62*62
-            x = self.pool(F.relu(self.conv2(x))) #32*58*58 -> 32*29*29
-            x = x.view(-1, 32 * 29 * 29)
+            x = self.pool(F.relu(self.conv2(x)))
+            x = x.view(-1, 12 * 19 * 29)
             x = F.dropout(F.relu(self.fc1(x)))
             x = F.relu(self.fc2(x))
             out = F.sigmoid(self.fc3(x))
@@ -125,5 +125,10 @@ for cv in range(6):
     result = evaluate(model, validation_generator)
     cv_results.append(result)
 
-np.mean(cv_results)
+
+/np.mean(cv_results)
 result = evaluate(model, training_generator)
+
+512/4
+256/4
+374%4
