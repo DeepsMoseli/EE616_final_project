@@ -19,13 +19,12 @@ class Dataset(data.Dataset):
         'Initialization'
         self.labels = labels
         self.list_IDs = list_IDs
-        self.size = (748,512)
         self.teeth_transform = transforms.Compose([
-            #transforms.RandomResizedCrop(self.size),
+            transforms.RandomResizedCrop((748,512)),
             transforms.Grayscale(num_output_channels=3),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(), # Transform from [0,255] uint8 to [0,1] float
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5,0.5, 0.5)) # Normalize to zero mean and unit variance
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)) # Normalize to zero mean and unit variance
             ])
 
 
@@ -42,7 +41,6 @@ class Dataset(data.Dataset):
 
         #X = torch.load('Dataset/' + str(ID) + '.jpg', pickle_module=pickle)
         X = Image.open('Dataset/' + str(ID) + '.jpg')
-        X = X.crop((0, 0, self.size[0], self.size[1]))
         X = self.teeth_transform(X)
         y = self.labels[str(ID)]
 

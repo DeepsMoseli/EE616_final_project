@@ -10,9 +10,8 @@ from torchvision import transforms
 import pandas as pd
 
 class Augmentations:
-    def __init__(self,angles =[180],size=(748,512)):
+    def __init__(self,angles =[45,90,150,180,270]):
         self.angles = angles
-        self.size = size
         
     def rotate_append(self,number,label):
         hold = []
@@ -25,6 +24,5 @@ class Augmentations:
             img_rot = img.rotate(self.angles[k])
             img_rot.save('Dataset/' + str(imageName) + '.jpg')
         return pd.DataFrame({"image":hold,"label":labels})
-
 
 
