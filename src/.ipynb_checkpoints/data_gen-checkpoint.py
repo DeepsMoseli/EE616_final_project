@@ -22,12 +22,11 @@ class Dataset(data.Dataset):
         self.size = size
         self.resize = (224,224)
         self.teeth_transform = transforms.Compose([
-            #transforms.RandomResizedCrop(self.size),
-            transforms.Resize ( self.resize , interpolation=2 ),
+            transforms.Resize ( 256 , interpolation=2 ),
+            transforms.CenterCrop(self.resize[0]),
             transforms.Grayscale(num_output_channels=3),
-            transforms.RandomHorizontalFlip(),
             transforms.ToTensor(), # Transform from [0,255] uint8 to [0,1] float
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)) # Normalize to zero mean and unit variance
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)) # Normalize to zero mean and unit variance
             ])
 
 
