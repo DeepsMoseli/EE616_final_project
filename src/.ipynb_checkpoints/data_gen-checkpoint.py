@@ -21,7 +21,7 @@ class Dataset(data.Dataset):
         self.list_IDs = list_IDs
         self.size = size
         self.teeth_transform = transforms.Compose([
-            transforms.RandomResizedCrop(self.size),
+            #transforms.RandomResizedCrop(self.size),
             transforms.Grayscale(num_output_channels=3),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(), # Transform from [0,255] uint8 to [0,1] float
