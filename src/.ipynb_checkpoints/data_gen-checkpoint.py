@@ -15,17 +15,17 @@ from torchvision import transforms, datasets
 
 class Dataset(data.Dataset):
   'Characterizes a dataset for PyTorch'
-  def __init__(self, list_IDs, labels):
+  def __init__(self, list_IDs, labels, size = (748,500)):
         'Initialization'
         self.labels = labels
         self.list_IDs = list_IDs
-        self.size = (748,500)
+        self.size = size
         self.teeth_transform = transforms.Compose([
-            #transforms.RandomResizedCrop(self.size),
+            transforms.RandomResizedCrop(self.size),
             transforms.Grayscale(num_output_channels=3),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(), # Transform from [0,255] uint8 to [0,1] float
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5,0.5, 0.5)) # Normalize to zero mean and unit variance
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)) # Normalize to zero mean and unit variance
             ])
 
 

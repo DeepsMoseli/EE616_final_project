@@ -15,12 +15,13 @@ from torchvision import transforms, datasets
 
 class Dataset(data.Dataset):
   'Characterizes a dataset for PyTorch'
-  def __init__(self, list_IDs, labels):
+  def __init__(self, list_IDs, labels, size = (748,500)):
         'Initialization'
         self.labels = labels
         self.list_IDs = list_IDs
+        self.size = size
         self.teeth_transform = transforms.Compose([
-            transforms.RandomResizedCrop((748,512)),
+            transforms.RandomResizedCrop(self.size),
             transforms.Grayscale(num_output_channels=3),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(), # Transform from [0,255] uint8 to [0,1] float
@@ -41,6 +42,7 @@ class Dataset(data.Dataset):
 
         #X = torch.load('Dataset/' + str(ID) + '.jpg', pickle_module=pickle)
         X = Image.open('Dataset/' + str(ID) + '.jpg')
+        X = X.crop((0, 0, self.size[0], self.size[1]))
         X = self.teeth_transform(X)
         y = self.labels[str(ID)]
 
