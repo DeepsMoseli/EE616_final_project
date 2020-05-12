@@ -17,7 +17,6 @@ class Augmentations:
         hold = []
         labels = [label for k in self.angles]
         img = Image.open('Dataset/' + str(number) + '.jpg')
-        
         for k in range(len(self.angles)):
             imageName = 120+(len(self.angles)*(number-1))+(k+1)
             hold.append(imageName)
