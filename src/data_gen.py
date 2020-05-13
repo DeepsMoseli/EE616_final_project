@@ -43,7 +43,7 @@ class Dataset(data.Dataset):
 
         #X = torch.load('Dataset/' + str(ID) + '.jpg', pickle_module=pickle)
         X = Image.open('Dataset/' + str(ID) + '.jpg')
-        X = X.crop((0, 0, self.size[0], self.size[1]))
+        X = X.crop((0, 0, self.size[0], self.size[1])).convert('LA')
         X = self.teeth_transform(X)
         y = self.labels[str(ID)]
 
