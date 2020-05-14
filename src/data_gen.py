@@ -23,10 +23,10 @@ class Dataset(data.Dataset):
         self.resize = (374,250)
         self.teeth_transform = transforms.Compose([
             transforms.Resize ( self.size , interpolation=2 ),
-            #transforms.CenterCrop(self.resize[0]),
+            transforms.CenterCrop(self.resize[0]),
             transforms.Grayscale(num_output_channels=3),
             transforms.ToTensor(), # Transform from [0,255] uint8 to [0,1] float
-            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)) # Normalize to zero mean and unit variance
+            transforms.Normalize((0.5, 0.5, 0.5), (0.229, 0.224, 0.225)) # Normalize to zero mean and unit variance
             ])
 
 
