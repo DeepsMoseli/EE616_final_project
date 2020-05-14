@@ -27,7 +27,7 @@ class Augmentations:
                 image_rot_blurred.save('Dataset/' + str(imageName) + '.jpg')
             return pd.DataFrame({"image":hold,"label":labels})
         else:
-            if np.random.random()>0.6:
+            if np.random.random()>0.7:
                 labels = [label for k in self.angles]
                 img = Image.open('Dataset/' + str(number) + '.jpg')
                 for k in range(len(self.angles)):
